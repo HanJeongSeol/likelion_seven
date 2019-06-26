@@ -1,9 +1,10 @@
 {% extends 'index.html' %}
 
 {% block content %}
-    <h1>인코딩 변경 확인</h1>
+    <h1>문장을 입력하세요.</h1>
     <a href="{% url 'about' %}">About</a>
-
+    
+    <!-- textarea에 입력된 문장을 result로 보냅니다. -->
     <form action="{% url 'result' %}">
         <textarea name="fulltext" cols="40" rows="10"></textarea>
         <br>

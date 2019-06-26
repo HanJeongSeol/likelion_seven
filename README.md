@@ -20,7 +20,6 @@
 
     - $ python -m pip install django
         ->  django 설치
-    - 
     ```
 - Django 설정
     ```
@@ -44,3 +43,9 @@
     - $ python manage.py runserver 
         -> 서버 실행
     ```
+
+## wordcount 
+----------------
+### 개요
+- 사용자가 입력한 문장에 사용된 단어의 갯수를 카운팅 하는 페이지.
+- home에서 사용자가 문장을 입력할 시 result에서 결과를 확인할 수 있다.

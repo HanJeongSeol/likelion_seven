@@ -1,3 +1,5 @@
+<!-- views.py의 result함수에서 가공한 데이터를 불러와서 출력한다 -->
+
 {% extends 'index.html' %}
 {% block content %}
 
@@ -9,6 +11,8 @@
 <br>
 {{ fulltext }}
 <h2>단어 카운트 : </h2>
+<!-- items함수를 사용하여 dictionary에는 key - value가 튜플형으로 저장되어 있다. 
+따라서 for문에 변수를 두 개 선언하여 key = word, value = num으로 출력될 수 있도록 한다. -->
 {% for word, num in dictionary %}
 {{word}} : {{num }}
 <br>
