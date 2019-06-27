@@ -1,0 +1,5 @@
+{% for blog in blog.all %}
+    <h1>{{blog.title}}</h1>
+    <h3>{{blog.pub_date}}</h3>
+    <p>{{blog.body}}</p>
+{% endfor %}

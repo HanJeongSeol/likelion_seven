@@ -1,0 +1,10 @@
+<!-- 모델.객체.메소드를 활용하여 views에 보여준다 -->
+<!-- modelapp.objects.all(), all()메소드는 모든 객체를 다 가져온다. -->
+<!-- {{blogs.all}}  -->
+<!-- count() : 데이터 갯수 반환, .first() : 첫 번째 객체 반환, .last() : 마지막 객체 반환 -->
+<!-- 반복문을 한 번 실행할 때 마다 db에 저장된 데이터가 차례대로 불려진다. -->
+{% for blog in blogs.all %}
+    <h1>{{blog.title}}</h1>
+    <h2>{{blog.pub_date}}</h2>
+    <p>{{blog.body}}</p>
+{% endfor %}
