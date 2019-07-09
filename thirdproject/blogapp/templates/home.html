@@ -1,5 +1,8 @@
 {% for blog in blog.all %}
-    <h1>{{blog.title}}</h1>
-    <h3>{{blog.pub_date}}</h3>
-    <p>{{blog.body}}</p>
+    <h1>제목 : {{blog.title}}</h1>
+    <h3>날짜 : {{blog.pub_date}}</h3>
+    <!-- models의 summary는 body를 100글자를 상한선으로 지정하여 출력해주기 때문에 -->
+    <!-- blog.summary를 호출하면 body의 100글자를 가져오게 된다. -->
+    <!-- detail로 이동할 때 url에 blog.id 즉 pk값을 같이 보내주면 된다. -->
+    <p>본문 미리보기 : {{blog.summary}}<a href='{% url 'detail' blog.id %}'>...more</a> </p>         
 {% endfor %}

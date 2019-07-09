@@ -90,3 +90,33 @@
 2. 메인 페이지에 보여지는 글자 수 제한 기능 추가
 3. '...more'에 상세 페이지로 이동할 수 있는 링크 달기
 4. 링크를 클릭했을 때 detail.html페이지 내보내기
+    4-1. detail.html은 하나만 생성하여 x번째 객체를 요청하면 x번 객체의 내용을 보여준다.
+    4-2. 페이지의 url설계를 사용한다.(사이트/blog/객체번호)
+    4-3. 객체번호 즉 객체가 존재하지 않는다면 404에러 표시.
+
+- 용어정리
+    1. pk(primary key) : 객체들의 이름표, 구분자, 데이터의 대표값
+    2. path converter : URL을 게층적으로 디자인하여 편의성을 제공해준다.
+    3. get_object_or_404(클래스,검색조건) : 두 개의 인자를 받는 클래스, 어떤 클래스에서 검색조건에 해당되는 데이터가 있다면 가져오고, 없다면 404에러를 표시해준다.
+
+- Model.py
+    ```python
+    - Model에서 생성한 클래스에 함수 추가
+        ->  def summary(self):
+                return self.body[:100]  
+        -> summary를 호출하게되면 body의 글자수를 100자로 제한하여 사용자에게 보여주게 된다.
+    ```
+
+- Views.py
+    ```python
+    - 사용자에게 자세한 내용을 보여주는 detail 함수 추가
+        -> get_object_or_404를 사용하기 위해서는 import먼저 해야한다.
+    ```
+- url.py
+    ```python
+    - detail를 보여주는 url 추가
+        -> path('blog/<int:blog_id>',blog.views.detail, name='detail'),
+        -> int형 blog_id가 detail로 넘어간다.
+        -> blog_id가 pk이며 path converter가 이루어지도록 한다.
+        -> 페이지 별 넘버링을 통하여 계층적으로 관리할 수 있도록 한다.
+    ```

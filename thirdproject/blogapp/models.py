@@ -9,3 +9,8 @@ class blogapp(models.Model) :
 
     def __str__(self):
         return self.title
+
+    def summary(self):
+        return self.body[:100]          # 사용자에게 글자수를 100자로 제한해서 보여준다.
+
+    
