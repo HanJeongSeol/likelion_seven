@@ -138,11 +138,61 @@
 - Static 파일의 처리 과정
     1. Static 파일들의 위치 찾기
     2. Static 파일들을 한 곳에 모으기
-- 우리가 할 일
+- 우리가 할 일, v.static
     1. Static 파일들을 담을 폴더 만들기.
         - APP폴더 안에 Static폴더 만들기
     2. Static 파일이 어디 있고, 어디로 모을지 알려주기
         - setting.py에서 알려주기 
+        ```python
+        STATICFILES_DIRS = [
+            os.path.join(BASE_DIR,'portfolio','static')
+        ] # static파일들이 현재 어디있는지를 알려주는 곳, portfolio앱 폴더 안에 static폴더 속에 넣어주었다.
+
+        STATIC_ROOT = os.path.join(BASE_DIR,'static')
+        # static파일들이 어디로 모일 것인지를 쓰는 곳, 최상위 폴더에 static폴더를 새로 만들어서 모아주라는 뜻.
+
+        -> setting.py의 하단에 추가한다.
+        ```
     3. Static파일 한 곳에 모으기
         - $ python manage.py collectstatic 명령어 사용하기
+        - 최상위 폴더에 static폴더가 생성되고, static폴더(app에 포함된 폴더) 속에 있던 파일들이 복사되었다.
     4. 1~3번 완료 후 html상에 static파일을 사용한다고 알려준 후 static파일 사용
+    5. static파일을 사용할 html파일에 {% load staticfiles %} 작성
+
+- 우리가 할 일, v.media
+    1. 프로젝트로 업로드 되는 파일이다.
+        -> setting.py에 업로드 될 파일을 저장시킬 디렉토리 경로와 URL을 지정해줘야 한다.
+        -> static은 외부와 통신하지 않고 프로젝트 내부에서 행해진다. 하지만 media는 프로젝트 외부와의 통신을 통해 파일을 얻게 되는데 이 때 URL을 사용한다.
+        -> 즉 URL = 외부와의 통신망이다.
+    2. setting.py에 알려주기
+        ```python 
+        # BASE디렉토리에 media라는 디렉토리 이름으로 media파일을 모으겠습니다.
+        MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+
+        # 파일의 URL설정, 홈페이지이름/media/파일이름 -> 이런 형식으로 저장된다.
+        MEDIA_URL='/media/'
+        ```
+    3. URL추가
+        -> media는 static와 다르게 URL을 사용하기 떄문에 URL설정을 해줘야한다.
+        ```python
+        # media 사용하기위해서 아래 두 개를 import해온다.
+        from django.conf import settings    
+        from django.conf.urls.static import static
+
+        # 마지막 줄에 추가
+        urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+        ```
+    
+    4. models.py 추가 및 설정
+        -> $ pip install pillow             # db에 이미지 다루기 위해서 설치
+        ```python
+        class Portfolio(models.Model) :
+            title = models.CharField(max_length = 255)
+            image = models.ImageField(upload_to = 'images/')
+            description = models.CharField(max_length=500)
+
+            def __str__(self):
+                return self.title
+        ```
+        -> $ python manage.py makemigrations
+        -> $ python manage.py migrate

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blogapp.apps.BlogappConfig',
+    'portfolio.apps.PortfolioConfig',
 ]
 
 MIDDLEWARE = [
@@ -119,3 +120,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# static 파일들이 현재 어디에 있는지를 쓰는 곳
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR,'portfolio','static')
+]
+
+# static 파일들이 어디로 모일 것인지를 쓰는 곳
+STATIC_ROOT = os.path.join(BASE_DIR,'static')
+
+# BASE디렉토리에 media라는 디렉토리 이름으로 media파일을 모으겠습니다.
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+
+# 파일의 URL설정, 홈페이지이름/media/파일이름 -> 이런 형식으로 저장된다.
+MEDIA_URL='/media/'
