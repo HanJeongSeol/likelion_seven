@@ -32,9 +32,27 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'portfolio' %}">Portfolio</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">환영합니다. {{ user.username }} 님!</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'new' %}">글쓰기</a>
+                        <a class="dropdown-item"
+                        href="javascript:{document.getElementById('logout').submit()}">Logout</a>
+                    <form id="logout" method="POST" action="{% url 'logout' %}">
+                        {% csrf_token %} <input type="hidden" />
+                    </form>
+                    </div>
                 </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="{% url 'signup' %}">Signup</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+                {% endif %}
             </ul>
         </div>
     </nav>
