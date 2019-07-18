@@ -1,7 +1,7 @@
 {% extends 'index.html' %}
 {% block content %}
 <div class="container"><br>
-    {% for blog in blogs.all %}
+    {% for blog in posts %}
     <div class="card">
         <div class="card-body">
             <h2 class="card-title">{{blog.title}}</h2>
@@ -11,5 +11,31 @@
         </div>
     </div><br>
     {% endfor %}
+</div>
+
+<div class="container">
+    {# first and previious #}
+    {# posts는 현재 페이지를 가리킨다. 즉 has_previous함수, 이전페이지가 존재 한다면 아래 코드가 실행된다.#}
+    {% if posts.has_previous %}
+    {# 첫 번째 페이지로 이동한다. #}
+    <a href="?page=1">First</a>
+    {#previous_page_number은 이전 페이지 번호를 반환한다. 즉 이전 페이지로 이동하게 된다.#}
+    <a href="?page={{posts.previous_page_number}}">Previous</a>
+    {% endif %}
+
+    {# 3 of 4 #}
+    {# 현재 보고있는 페이지를 출력해준다 #}
+    <span>{{posts.number}}</span>
+    <span>of</span>
+    <span>{{posts.paginator.num_pages}}</span>
+    
+    {# Next Last #}
+    {# has_nest는 다음 페이지가 존재하는지를 알려준다. 즉 다음 페이지가 존재한다면 아래 코드가 실행된다 #}
+    {% if posts.has_next %}
+    {# Next는 다음 페이지를 보여준다. #}
+    <a href="?page={{posts.next_page_number}}">Next</a>
+    {# paginator.num_pages는 전체 페이지 개수를 반환한다. 즉 여기서는 맨 마지막 페이지로 이동하게 된다. #}
+    <a href="?page={{posts.paginator.num_pages}}">Last</a>
+    {%endif%}
 </div>
 {% endblock %}

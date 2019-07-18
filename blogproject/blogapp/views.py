@@ -1,10 +1,21 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
+from django.core.paginator import Paginator
 from .models import BlogModel
 
 def home(request):
     blogs = BlogModel.objects           # 쿼리셋 가져오기
-    return render(request,'home.html',{'blogs' : blogs})
+    # 블로그의 모든 글들을 대상으로
+    blog_list = BlogModel.objects.all()
+    # 블로그 객체 세 개를 한 페이지로 자르기, Paginator함수 사용
+    paginator = Paginator(blog_list,4)
+    # ruquest된 페이지가 뭔지를 알아내고(request페이지를 변수에 담아내고)
+    # GET방식으로 얻어낸 request중에서 key값이 page인 딕셔너리형의 value값을 page에 담는다.
+    page = request.GET.get('page')
+    # request된 페이지를 얻어온 뒤 return해준다.
+    # request된 페이지에 대한 post가 posts에 담겨진다.
+    posts = paginator.get_page(page)
+    return render(request,'home.html',{'blogs' : blogs, 'posts':posts})
 
 def detail(request, blog_id):
     details =get_object_or_404(BlogModel,pk=blog_id)
